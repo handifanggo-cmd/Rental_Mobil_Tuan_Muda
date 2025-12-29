@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4" style="max-width: 600px;">
+    <div class="card shadow-sm border-0 p-4">
+        <h3 class="fw-bold mb-4">Tambah Mobil Baru</h3>
+        <form action="/admin/mobil/tambah" method="POST">
+            <div class="mb-3">
+                <label class="form-label">Nama Mobil</label>
+                <input type="text" name="nama" class="form-control" placeholder="Contoh: Toyota Supra" required>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Merk</label>
+                    <input type="text" name="merk" class="form-control" placeholder="Contoh: Toyota" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Harga Sewa / Hari</label>
+                    <input type="number" name="harga" class="form-control" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Jumlah Stok</label>
+                <input type="number" name="stok" class="form-control" value="1" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">URL Foto Mobil</label>
+                <input type="url" name="foto_url" class="form-control" placeholder="https://..." required>
+            </div>
+            <div class="mb-4">
+                <label class="form-label">Deskripsi Singkat</label>
+                <textarea name="deskripsi" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary fw-bold py-2">Simpan ke Supabase</button>
+                <a href="/admin/dashboard" class="btn btn-light text-muted">Batal</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

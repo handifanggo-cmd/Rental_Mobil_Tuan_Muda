@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .hero-banner {
+        background: linear-gradient(135deg, rgba(10, 10, 10, 0.9) 0%, rgba(87, 26, 26, 0.8) 100%), 
+                    url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1920');
+        background-size: cover;
+        background-position: center;
+        border-radius: 30px;
+        padding: 80px 40px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+        margin-top: 20px;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .brand-name {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #d7dee0;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    .hero-text h1 {
+        font-size: 4.5rem;
+        font-weight: 900;
+        line-height: 0.9;
+        text-transform: uppercase;
+        letter-spacing: -2px;
+    }
+
+    .price-tag {
+        font-size: 6rem;
+        font-weight: 900;
+        color: #e2e9e3;
+        line-height: 0.8;
+    }
+
+    .contact-info {
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid #25D366; 
+        border-radius: 15px;
+        padding: 15px 25px;
+        display: inline-flex;
+        align-items: center;
+        margin-top: 20px;
+        backdrop-filter: blur(5px);
+    }
+
+    .wa-color {
+        color: #25D366; 
+        filter: drop-shadow(0 0 5px rgba(37, 211, 102, 0.5));
+    }
+
+    .feature-box {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: 0.3s;
+    }
+
+    .btn-booking {
+        background: #ffc107;
+        color: #000;
+        font-weight: 800;
+        padding: 18px 50px;
+        border-radius: 15px;
+        font-size: 1.4rem;
+        text-transform: uppercase;
+        border: none;
+        transition: 0.3s;
+    }
+
+    .btn-booking:hover {
+        background: #ffffff;
+        transform: scale(1.05);
+    }
+</style>
+
+<div class="container">
+    <div class="hero-banner text-white">
+        <div class="row align-items-center">
+            <div class="col-lg-7 hero-text">
+                <div class="brand-name mb-2">
+                    <i class="fas fa-car-side"></i> RENTAL TUAN MUDA
+                </div>
+                <h1 class="mb-4 text-shadow"> RASAKAN PELAYANAN<br> <span class="text-warning">TERBAIK KAMI</span></h1>
+                
+                <p class="fs-5 opacity-75 mb-4">Solusi sewa mobil mewah terpercaya dengan pelayanan bintang lima.</p>
+
+                <div class="contact-info mb-4">
+                    <i class="fab fa-whatsapp fa-3x wa-color me-3"></i>
+                    <div>
+                        <div class="small fw-bold text-uppercase text-light opacity-60">hubungi kami: handy fanggo</div>
+                        <div class="fs-3 fw-black" style="letter-spacing: 1px; color: #b7beb6;">082260871519</div>
+                    </div>
+                </div>
+
+                <br>
+                
+                <a href="/login/customer" class="btn btn-booking shadow-lg mt-3">
+                    Booking Sekarang <i class="fas fa-calendar-check ms-2"></i>
+                </a>
+            </div>
+
+            <div class="col-lg-5 text-center mt-5 mt-lg-0">
+                <div class="price-section p-4 rounded-4" style="background: rgba(0,0,0,0.5); border: 2px dashed #d4e206;">
+                    <p class="mb-0 fs-4 fw-bold text-uppercase">Mulai Dari</p>
+                    <div class="d-flex justify-content-center align-items-start my-2">
+                        <span class="fs-2 fw-bold mt-2">Rp</span>
+                        <span class="price-tag">299</span>
+                        <span class="fs-2 fw-bold mt-5">RB</span>
+                    </div>
+                    <div class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold">
+                        SIAP ANTAR
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 text-center g-4">
+        <div class="col-6 col-md-3">
+            <div class="feature-box">
+                <i class="fas fa-gem fa-2x text-warning mb-3"></i>
+                <h6 class="fw-bold mb-0 text-white">Unit Premium</h6>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="feature-box">
+                <i class="fas fa-gas-pump fa-2x text-warning mb-3"></i>
+                <h6 class="fw-bold mb-0 text-white">BBM Full</h6>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="feature-box">
+                <i class="fas fa-car-side fa-2x text-warning mb-3"></i>
+                <h6 class="fw-bold mb-0 text-white">Mobil Terbaru</h6>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="feature-box">
+                <i class="fas fa-key fa-2x text-warning mb-3"></i>
+                <h6 class="fw-bold mb-0 text-white">Lepas Kunci</h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4" style="max-width: 600px;">
+    <div class="card border-0 shadow-sm p-4">
+        <h3 class="fw-bold mb-4 text-center">Edit Data Mobil
+        </h3>
+        
+        <div class="text-center mb-4 bg-light p-3 rounded">
+            <img src="{{ data.foto_url }}" class="rounded shadow-sm" style="max-height: 150px; width: 100%; object-fit: cover;" onerror="this.src='https://placehold.co/400x250?text=No+Image'">
+            <p class="small text-muted mt-2 mb-0">Preview Foto Mobil</p>
+        </div>
+
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Nama Mobil</label>
+                <input type="text" name="nama" class="form-control" value="{{ data.nama_mobil }}" required>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label small fw-bold">Merk</label>
+                    <input type="text" name="merk" class="form-control" value="{{ data.merk }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label small fw-bold">Harga Sewa / Hari</label>
+                    <input type="number" name="harga" class="form-control" value="{{ data.harga_sewa }}" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label small fw-bold">Jumlah Stok</label>
+                    <input type="number" name="stok" class="form-control" value="{{ data.stok }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label small fw-bold">URL Foto Baru</label>
+                    <input type="url" name="foto_url" class="form-control" value="{{ data.foto_url }}" required>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label small fw-bold">Deskripsi</label>
+                <textarea name="deskripsi" class="form-control" rows="3">{{ data.deskripsi }}</textarea>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-warning py-2 fw-bold shadow-sm">Simpan Perubahan</button>
+                <a href="/admin/dashboard" class="btn btn-light border">Batal</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

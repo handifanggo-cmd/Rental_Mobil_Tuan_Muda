@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-dark">Riwayat Penyewaan Saya</h2>
+    <a href="/customer/dashboard" class="btn btn-outline-primary rounded-pill btn-sm px-4">Sewa Mobil Lagi</a>
+</div>
+
+<div class="row">
+    {% for t in transaksi %}
+    <div class="col-md-6 mb-4">
+        <div class="card border-0 shadow-sm h-100 overflow-hidden">
+            <div class="row g-0 h-100">
+                <div class="col-4">
+                    <img src="{{ t.mobil.foto_url }}" class="img-fluid h-100" style="object-fit: cover;" onerror="this.src='https://placehold.co/400x300?text=Mobil'">
+                </div>
+                <div class="col-8">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="fw-bold mb-0 text-uppercase">{{ t.mobil.nama_mobil }}</h5>
+                            <span class="badge {% if t.status_transaksi == 'Pending' %}bg-warning text-dark{% elif t.status_transaksi == 'Disewa' %}bg-info{% else %}bg-success{% endif %} rounded-pill small">
+                                {{ t.status_transaksi }}
+                            </span>
+                        </div>
+                        <p class="text-muted small mb-2">
+                            <i class="far fa-calendar-alt"></i> {{ t.tgl_mulai }} s/d {{ t.tgl_selesai }}
+                        </p>
+                        <div class="bg-light p-2 rounded">
+                            <small class="text-muted d-block">Total Tagihan:</small>
+                            <span class="h5 fw-bold text-primary mb-0">Rp {{ t.total_biaya | format_rupiah }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12 text-center py-5">
+        <div class="card border-0 shadow-sm p-5">
+            <p class="text-muted mb-3">Anda belum memiliki riwayat penyewaan.</p>
+            <a href="/customer/dashboard" class="btn btn-primary px-5 rounded-pill">Mulai Sewa Sekarang</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

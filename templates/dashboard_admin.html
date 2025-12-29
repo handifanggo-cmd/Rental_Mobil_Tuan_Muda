@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-dark">Panel Kendali Admin</h2>
+    <a href="/admin/mobil/tambah" class="btn btn-primary rounded-pill px-4 shadow-sm fw-bold">
+        Tambah Mobil Baru
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm mb-5">
+    <div class="card-header bg-white py-3">
+        <h5 class="fw-bold mb-0 text-primary">Laporan Penyewaan Terbaru</h5>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Penyewa</th>
+                    <th>WhatsApp</th>
+                    <th>Mobil</th>
+                    <th>Status</th>
+                    <th class="text-center">Aksi Validasi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for l in laporan %}
+                <tr>
+                    <td class="fw-bold">{{ l.nama_penyewa }}</td>
+                    <td>
+                        <a href="https://wa.me/{{ l.nomor_wa }}" target="_blank" class="text-decoration-none text-success">
+                            <i class="fab fa-whatsapp"></i> {{ l.nomor_wa }}
+                        </a>
+                    </td>
+                    <td>{{ l.mobil.nama_mobil }}</td>
+                    <td>
+                        <span class="badge {% if l.status_transaksi == 'Pending' %}bg-warning text-dark{% elif l.status_transaksi == 'Disewa' %}bg-info{% else %}bg-success{% endif %} rounded-pill">
+                            {{ l.status_transaksi }}
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        {% if l.status_transaksi == 'Pending' %}
+                            <a href="/admin/transaksi/update/{{ l.id }}/Disewa" class="btn btn-sm btn-outline-primary fw-bold rounded-pill">
+                                Konfirmasi Sewa
+                            </a>
+                        {% elif l.status_transaksi == 'Disewa' %}
+                            <a href="/admin/transaksi/update/{{ l.id }}/Selesai" class="btn btn-sm btn-outline-success fw-bold rounded-pill">
+                                Selesaikan & Balikkan Stok
+                            </a>
+                        {% else %}
+                            <span class="text-muted small">Transaksi Selesai</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-muted">Belum ada transaksi masuk.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<hr class="my-5">
+
+<h3 class="fw-bold text-dark mb-4">Kelola Armada Mobil</h3>
+<div class="card border-0 shadow-sm mb-5">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Foto</th>
+                    <th>Detail Mobil</th>
+                    <th>Harga/Hari</th>
+                    <th class="text-center">Stok</th>
+                    <th class="text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in mobil %}
+                <tr>
+                    <td>
+                        <img src="{{ m.foto_url }}" class="rounded shadow-sm" style="width: 100px; height: 60px; object-fit: cover;" onerror="this.src='https://placehold.co/400x250?text=No+Image'">
+                    </td>
+                    <td>
+                        <div class="fw-bold text-uppercase">{{ m.nama_mobil }}</div>
+                        <span class="badge bg-secondary small">{{ m.merk }}</span>
+                    </td>
+                    <td class="text-primary fw-bold">Rp {{ m.harga_sewa | format_rupiah }}</td>
+                    <td class="text-center">
+                        <span class="badge {% if m.stok > 0 %}bg-success{% else %}bg-danger{% endif %} rounded-pill">
+                            {{ m.stok }} Unit
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <div class="btn-group shadow-sm">
+                            <a href="/admin/mobil/edit/{{ m.id }}" class="btn btn-sm btn-warning fw-bold">Edit</a>
+                            <a href="/admin/mobil/hapus/{{ m.id }}" class="btn btn-sm btn-danger fw-bold" onclick="return confirm('Hapus armada ini?')">Hapus</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

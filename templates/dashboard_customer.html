@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    /* Mengatur Background Foto Mobil Asli pada Body */
+    body { 
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                    url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1920');
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        color: rgb(15, 15, 15);
+    }
+
+    .card-mobil { 
+        transition: transform 0.3s; 
+        background-color: rgba(155, 175, 160, 0.95);
+        border: none;
+    }
+    
+    .card-mobil:hover { 
+        transform: translateY(-10px); 
+        box-shadow: 0 15px 30px rgba(0,0,0,0.3) !important;
+    }
+
+    .header-section {
+        padding: 40px 0;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    }
+</style>
+
+<div class="row mb-4 header-section">
+    <div class="col">
+        <h1 class="fw-bold text-white">Pilih Armada Anda</h1>
+        <p class="fs-5 text-light">Halo, <strong>{{ session.username }}</strong>! Temukan kendaraan terbaik untuk perjalanan mewah Anda.</p>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for m in mobil %}
+    <div class="col">
+        <div class="card h-100 shadow-sm overflow-hidden card-mobil text-dark">
+            <div class="position-relative">
+                <img src="{{ m.foto_url }}" class="card-img-top" style="height: 200px; object-fit: cover;" onerror="this.src='https://placehold.co/600x400?text=Mobil+Rental'">
+                {% if m.stok <= 2 and m.stok > 0 %}
+                    <span class="badge bg-danger position-absolute top-0 end-0 m-2">Sisa {{ m.stok }} Unit!</span>
+                {% endif %}
+            </div>
+            
+            <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5 class="card-title fw-bold text-uppercase mb-0">{{ m.nama_mobil }}</h5>
+                    <span class="badge bg-primary rounded-pill">{{ m.merk }}</span>
+                </div>
+                <p class="card-text text-muted small mb-3" style="min-height: 40px;">{{ m.deskripsi }}</p>
+                <h4 class="text-success fw-bold mb-3">Rp {{ m.harga_sewa | format_rupiah }} <small class="text-muted" style="font-size: 0.6em;">/hari</small></h4>
+                
+                <div class="mt-auto">
+                    {% if m.stok > 0 %}
+                    <hr>
+                    <form action="/customer/book" method="POST">
+                        <input type="hidden" name="mobil_id" value="{{ m.id }}">
+                        <div class="mb-2">
+                            <label class="small fw-bold text-dark">Nomor WhatsApp</label>
+                            <input type="text" name="nomor_wa" class="form-control form-control-sm" placeholder="Contoh: 08123456789" required>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col">
+                                <label class="small fw-bold text-dark">Tgl Mulai</label>
+                                <input type="date" name="tgl_mulai" class="form-control form-control-sm" required>
+                            </div>
+                            <div class="col">
+                                <label class="small fw-bold text-dark">Tgl Selesai</label>
+                                <input type="date" name="tgl_selesai" class="form-control form-control-sm" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-dark w-100 fw-bold py-2 shadow-sm">
+                            <i class="fas fa-car-side me-2"></i>Sewa Sekarang
+                        </button>
+                    </form>
+                    {% else %}
+                    <div class="alert alert-danger text-center py-2 mb-0 fw-bold">Stok Habis</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

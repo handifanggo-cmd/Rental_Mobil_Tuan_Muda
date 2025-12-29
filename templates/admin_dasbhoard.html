@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-dark"> Admin</h2>
+    <a href="/admin/mobil/tambah" class="btn btn-primary rounded-pill px-4 shadow-sm fw-bold">
+        <i class="bi bi-plus-lg"></i> Tambah Mobil Baru
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm mb-5">
+    <div class="card-header bg-white py-3">
+        <h5 class="fw-bold mb-0 text-primary">Laporan Penyewaan Terbaru</h5>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Penyewa</th>
+                    <th>WhatsApp</th>
+                    <th>Mobil</th>
+                    <th>Tgl Pinjam</th>
+                    <th class="text-center">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for l in laporan %}
+                <tr>
+                    <td class="fw-bold">{{ l.nama_penyewa }}</td>
+                    <td>{{ l.nomor_wa }}</td>
+                    <td>{{ l.mobil.nama_mobil }}</td>
+                    <td>{{ l.tgl_mulai }}</td>
+                    <td class="text-center">
+                        <span class="badge {% if l.status_transaksi == 'Pending' %}bg-warning text-dark{% else %}bg-success{% endif %} rounded-pill">
+                            {{ l.status_transaksi }}
+                        </span>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-muted">Belum ada transaksi masuk.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<hr class="my-5">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold text-dark">Kelola Mobil</h3>
+</div>
+
+<div class="card border-4 shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Foto</th>
+                    <th>Detail Mobil</th>
+                    <th>Harga/Hari</th>
+                    <th class="text-center">Stok</th>
+                    <th class="text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in mobil %}
+                <tr>
+                    <td style="width: 150px;">
+                        <img src="{{ m.foto_url }}" class="img-thumbnail shadow-sm" 
+                             style="width: 120px; height: 80px; object-fit: cover;"
+                             onerror="this.src='https://placehold.co/600x400?text=No+Image'">
+                    </td>
+                    <td>
+                        <div class="fw-bold text-uppercase">{{ m.nama_mobil }}</div>
+                        <span class="badge bg-secondary mb-1">{{ m.merk }}</span>
+                        <div class="small text-muted text-capitalize">
+                            Jenis: {{ m.deskripsi.split(',')[0] if m.deskripsi else 'Kendaraan' }}
+                        </div>
+                    </td>
+                    <td class="text-primary fw-bold">Rp {{ "{:,.0f}".format(m.harga_sewa) }}</td>
+                    <td class="text-center">
+                        <span class="badge {% if m.stok > 0 %}bg-success{% else %}bg-danger{% endif %} rounded-pill">
+                            {{ m.stok }} Unit
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <div class="btn-group shadow-sm">
+                            <a href="/admin/mobil/edit/{{ m.id }}" class="btn btn-sm btn-warning fw-bold">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                            <a href="/admin/mobil/hapus/{{ m.id }}" class="btn btn-sm btn-danger fw-bold" 
+                               onclick="return confirm('Apakah Anda yakin ingin menghapus armada {{ m.nama_mobil }}?')">
+                                <i class="bi bi-trash"></i> Hapus
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-muted">Data mobil kosong.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
